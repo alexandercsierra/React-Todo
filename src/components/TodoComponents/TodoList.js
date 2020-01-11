@@ -15,6 +15,12 @@ const TodoList = props => {
     let newArr = props.todos.map(todo => {
             return <Todo task={todo.task} done={todo.completed} completed={props.completed} class={todo.class} id={todo.id}/>
         })
+        // localStorage.setItem('todoState', JSON.stringify({'todos': props.todos}));
+        // let localData = JSON.parse(localStorage.getItem('todoState'));
+    //   console.log(localData);
+    // let newArr = localData.todos.map(todo => {
+    //         return <Todo task={todo.task} done={todo.completed} completed={props.completed} class={todo.class} id={todo.id}/>
+    //     })
     return <TodoDiv>
         {/* {props.todos.map(todo => {
             return <Todo task={todo.task} done={todo.completed} completed={props.completed} class={todo.class} id={todo.id}/>

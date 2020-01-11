@@ -46,10 +46,11 @@ class App extends React.Component {
 
   //toggles the css class depending upon whether a particular task has been clicked or not by duplicating state, changing it, then setting the altered state as the new state
   completed = e => {
-    let clicked = this.state.todos.filter(todo => todo.task === e.target.textContent);
+
+    let clicked = this.state.todos.filter(todo => todo.id === Number(e.target.id));
+    // console.log(e.target.id);
     clicked[0].completed = !clicked[0].completed;
     if (clicked[0].completed === true){
-      //copy current state to new variable
       clicked[0].class="complete";
       let index = this.state.todos.indexOf(clicked[0]);
       console.log(index);
@@ -83,9 +84,9 @@ class App extends React.Component {
     return (
       <div className="Todo">
         <h2>Welcome to your Todo App!</h2>
-        <TodoList todos={this.state.todos} completed={this.completed} />
+        <TodoList todos={this.state.todos} completed={this.completed}/>
         <TodoForm handleChange={this.handleChange} currentTodo={this.state.currentTodo} onSubmit={this.onSubmit} clearCompleted={this.clearCompleted}/>
-        <p>{this.state.currentTodo}</p>
+        {/* <p>{this.state.currentTodo}</p> */}
         {/* <p>{this.state.doneTodo.task}</p> */}
       </div>
     );

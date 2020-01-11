@@ -23,7 +23,7 @@ class App extends React.Component {
         }
       ],
       currentTodo: "",
-      doneTodo: ""
+      // doneTodo: ""
     }; //end state
   }
 
@@ -38,9 +38,13 @@ class App extends React.Component {
       id: Date.now(),
       completed: false,
       class: "incomplete"
-    }]})
+      }],
+      currentTodo: ""
+    })
+  
   }
 
+  //toggles the css class depending upon whether a particular task has been clicked or not by duplicating state, changing it, then setting the altered state as the new state
   completed = e => {
     let clicked = this.state.todos.filter(todo => todo.task === e.target.textContent);
     clicked[0].completed = !clicked[0].completed;
@@ -51,19 +55,25 @@ class App extends React.Component {
       console.log(index);
       let newState = this.state.todos;
       newState[index] = clicked[0];
-      this.setState(newState);
-      
-
-
-
+      this.setState({todos: newState});
     } else {
       clicked[0].class="incomplete";
       let index = this.state.todos.indexOf(clicked[0]);
       console.log(index);
       let newState = this.state.todos;
       newState[index] = clicked[0];
-      this.setState(newState);
+      this.setState({todos: newState});
+
     }
+  }
+
+  //creates a variable to filter out all the tasks that have completed set to true then set the new state to that variable
+  clearCompleted = e => {
+    e.preventDefault();
+    let incompleteTasks = this.state.todos.filter(todo => todo.completed === false);
+    console.log(incompleteTasks);
+    this.setState({todos: incompleteTasks});
+
   }
 
 
@@ -73,10 +83,10 @@ class App extends React.Component {
     return (
       <div className="Todo">
         <h2>Welcome to your Todo App!</h2>
-        <TodoList todos={this.state.todos} completed={this.completed} class={this.class}/>
-        <TodoForm handleChange={this.handleChange} currentTodo={this.state.currentTodo} onSubmit={this.onSubmit}/>
+        <TodoList todos={this.state.todos} completed={this.completed} />
+        <TodoForm handleChange={this.handleChange} currentTodo={this.state.currentTodo} onSubmit={this.onSubmit} clearCompleted={this.clearCompleted}/>
         <p>{this.state.currentTodo}</p>
-        <p>{this.state.doneTodo.task}</p>
+        {/* <p>{this.state.doneTodo.task}</p> */}
       </div>
     );
   }

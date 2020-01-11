@@ -1,7 +1,17 @@
 import React from 'react';
 import TodoList from './components/TodoComponents/TodoList'
 import TodoForm from './components/TodoComponents/TodoForm'
+import banner from './components/imgs/banner.jpg'
 import './Todo.css'
+import styled from 'styled-components'
+
+const Banner = styled.div`
+  background-image: url(${banner});
+  background-size: cover;
+  background-position: 50% 25%;
+  width: 100%;
+  height: 45vh;
+`;
 
 class App extends React.Component {
   constructor() {
@@ -33,14 +43,17 @@ class App extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.setState({todos: [... this.state.todos, {
-      task: this.state.currentTodo,
-      id: Date.now(),
-      completed: false,
-      class: "incomplete"
-      }],
-      currentTodo: ""
-    })
+    if (this.state.currentTodo !== ""){
+      this.setState({todos: [... this.state.todos, {
+        task: this.state.currentTodo,
+        id: Date.now(),
+        completed: false,
+        class: "incomplete"
+        }],
+        currentTodo: ""
+      })
+    }
+    
   
   }
 
@@ -83,9 +96,11 @@ class App extends React.Component {
   render(){
     return (
       <div className="Todo">
-        <h2>Welcome to your Todo App!</h2>
-        <TodoList todos={this.state.todos} completed={this.completed}/>
+        <Banner></Banner>
+        <h2>Yet Another Todo App</h2>
+        
         <TodoForm handleChange={this.handleChange} currentTodo={this.state.currentTodo} onSubmit={this.onSubmit} clearCompleted={this.clearCompleted}/>
+        <TodoList todos={this.state.todos} completed={this.completed}/>
         {/* <p>{this.state.currentTodo}</p> */}
         {/* <p>{this.state.doneTodo.task}</p> */}
       </div>
